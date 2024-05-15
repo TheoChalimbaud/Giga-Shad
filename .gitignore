@@ -1,0 +1,5 @@
+#Dépendances
+/node_modules
+
+#Token à pas donner
+/config.js
