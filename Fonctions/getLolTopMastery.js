@@ -1,4 +1,7 @@
-
+const https = require('https');
+const getLolChampName = require("./getLolChampName");
+const config = require("./../config");
+const API_KEY = config.RiotApi;
 
 module.exports = async (count, puuid) => {
     return new Promise((resolve, reject) => {

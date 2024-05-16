@@ -17,17 +17,19 @@ module.exports = {
         }
     ],
 
-    async run(bot, message, args) {
+    async run(bot, interaction, args) {
         const player = args.getString("joueur");
         
         try {
+            //répondre au message direct (car c'est bad long, c'est 3sec max)
+            await interaction.deferReply();
+
             // Utilisation de la fonction getPUUID
             const PUUID = await bot.function.getLolPUUID(player);
             const accountInfo = await bot.function.getLolAccount(PUUID);
             const lastLolVersion = await bot.function.getLolLastVersion();
             const iconLink = `https://ddragon.leagueoflegends.com/cdn/${lastLolVersion}/img/profileicon/${accountInfo.profileIconId}.png`;
             const {soloQueue, flexQueue} = await bot.function.getLolRanks(accountInfo.accountId);//[tier, rank, leaguePoints, wins, losses, veteran, inactive, freshBlood,hotStreak]
-            console.log(soloQueue, flexQueue);
 
             const masteries = await bot.function.getLolTopMastery(3, PUUID); //[championId, championLevel, championPoints, championName]
 
@@ -41,16 +43,13 @@ module.exports = {
                 .setColor(bot.color)
                 .setTitle(`Profile LoL de ${player} :`)
                 .setThumbnail(iconLink)
-                .setDescription(`__**Ranks :**__\nSolo/Duo : ${rankEmoji[soloQueue[0].tier]} ${soloQueue[0].tier} ${soloQueue[0].rank} ${soloQueue[0].leaguePoints} lp\nFlex : ${rankEmoji[flexQueue[0].tier]} ${flexQueue[0].tier} ${flexQueue[0].rank} ${flexQueue[0].leaguePoints} lp
-                
-                __**Top 3 Maîtrises :**__\n${masteries[0].championName} - ${masteries[0].championPoints} pts\n${masteries[1].championName} - ${masteries[1].championPoints} pts\n${masteries[2].championName} - ${masteries[2].championPoints} pts`)
+                .setDescription(`__**Ranks :**__\nSolo/Duo : ${rankEmoji[soloQueue[0].tier]} ${soloQueue[0].tier} ${soloQueue[0].rank} ${soloQueue[0].leaguePoints} lp\nFlex : ${rankEmoji[flexQueue[0].tier]} ${flexQueue[0].tier} ${flexQueue[0].rank} ${flexQueue[0].leaguePoints} lp\n\n__**Top 3 Maîtrises :**__\n${masteries[0].championName} - ${masteries[0].championPoints} pts\n${masteries[1].championName} - ${masteries[1].championPoints} pts\n${masteries[2].championName} - ${masteries[2].championPoints} pts`)
                 .setTimestamp()
                 .setFooter({text : "/lolprofile"});
 
-            await message.reply({embeds: [Embed]})
+            await interaction.editReply({embeds: [Embed]});
         } catch (error) {
-            message.reply(error);
+            await interaction.editReply(error);
         }
     }
-    
 };
