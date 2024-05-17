@@ -43,7 +43,7 @@ module.exports = {
                 .setColor(bot.color)
                 .setTitle(`Profile LoL de ${player} :`)
                 .setThumbnail(iconLink)
-                .setDescription(`__**Ranks :**__\nSolo/Duo : ${rankEmoji[soloQueue[0].tier]} ${soloQueue[0].tier} ${soloQueue[0].rank} ${soloQueue[0].leaguePoints} lp\nFlex : ${rankEmoji[flexQueue[0].tier]} ${flexQueue[0].tier} ${flexQueue[0].rank} ${flexQueue[0].leaguePoints} lp\n\n__**Top 3 Maîtrises :**__\n${masteries[0].championName} - ${masteries[0].championPoints} pts\n${masteries[1].championName} - ${masteries[1].championPoints} pts\n${masteries[2].championName} - ${masteries[2].championPoints} pts`)
+                .setDescription(`__Level :__ ${accountInfo.summonerLevel}\n\n__Ranks :__\nSolo/Duo : ${rankEmoji[soloQueue[0].tier]} ${soloQueue[0].tier} ${soloQueue[0].rank} ${soloQueue[0].leaguePoints} lp\nFlex : ${rankEmoji[flexQueue[0].tier]} ${flexQueue[0].tier} ${flexQueue[0].rank} ${flexQueue[0].leaguePoints} lp\n\n__Top 3 Maîtrises :__\n${masteries[0].championName} - ${masteries[0].championPoints} pts\n${masteries[1].championName} - ${masteries[1].championPoints} pts\n${masteries[2].championName} - ${masteries[2].championPoints} pts`)
                 .setTimestamp()
                 .setFooter({text : "/lolprofile"});
 
